@@ -3,6 +3,9 @@
 #include "constants.h"
 #include "graphics.h"
 #include "UI.h"
+#include "Control.h"
+
+Control C;
 
 // functions
 void process_input();
@@ -12,13 +15,16 @@ void generate();
 void show_title_screen();
 bool is_colliding(SDL_Rect &a, SDL_Rect &b);
 double current_time();
+void createNumberFont(vector<Control>& newvector, SDL_Texture* texture, TTF_Font* font);
 
 // global objects
 SDL_Window* window = NULL;
 SDL_Renderer* renderer = NULL;
 SDL_Event event;
-vector<Balloon> balloons;
 Panel panel;
+
+vector<Balloon> balloons;
+vector<Control> ControlVec;
 
 // global variables
 bool running = true, fullscreen = false;
@@ -31,6 +37,7 @@ std::array<bool, 2> buttons;
 
 int main(int argc, char* argv[])
 {
+	srand(NULL);
 	if (SDL_Init(SDL_INIT_EVERYTHING) != 0)
 	{
 		SDL_LogCritical(SDL_LOG_CATEGORY_APPLICATION, "SDL_Init Error: %s\n", SDL_GetError());
@@ -62,6 +69,9 @@ int main(int argc, char* argv[])
 	cout << "Entering title screen\n";
 	show_title_screen();
 
+	TTF_Font *font = TTF_OpenFont("ArialBlack.ttf", 30);
+
+	createNumberFont(ControlVec, C.font, font);
 	//SDL_SetWindowPosition(window, 0, 0);
 
 	if (running)
@@ -135,20 +145,8 @@ void process_input()
 				balloons.erase(iter);
 			}
 		}
+
 		break;
-	case SDL_MOUSEBUTTONDOWN:
-		if (event.button.button == SDL_BUTTON_LEFT)
-		{
-			for (int i = 0; i < balloons.size(); i++)
-			{
-				if (event.button.x > balloons[i].position.x && event.button.x < balloons[i].position.x + balloons[i].dimensions.x
-					&& event.button.y > balloons[i].position.y && event.button.y < balloons[i].position.y + balloons[i].dimensions.y)
-				{
-					vector<Balloon>::iterator iter = balloons.begin() + i;
-					balloons.erase(iter);
-				}
-			}
-		}
 	}
 }
 
@@ -263,4 +261,17 @@ bool is_colliding(SDL_Rect &a, SDL_Rect &b) {
 double current_time()
 {
 	return std::chrono::duration_cast<std::chrono::milliseconds>(std::chrono::system_clock::now().time_since_epoch()).count();
+}
+
+void createNumberFont(vector<Control>& newvector, SDL_Texture* texture, TTF_Font* font)
+{
+	for (int i = 0; i < 30; i++)
+	{
+		//cout << player.numbers[i] << endl;
+		SDL_Surface *textSurface = TTF_RenderText_Solid(font, C.numbers[i], C.black);
+		texture = SDL_CreateTextureFromSurface(renderer, textSurface);
+		textSurface = nullptr;
+		SDL_FreeSurface(textSurface);
+		newvector.emplace_back(texture);
+	}
 }

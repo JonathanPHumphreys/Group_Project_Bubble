@@ -1,4 +1,4 @@
-﻿<?xml version="1.0" encoding="UTF-8"?>
+﻿<?xml version="1.0" encoding="utf-8"?>
 <Project ToolsVersion="14.0" xmlns="http://schemas.microsoft.com/developer/msbuild/2003">
   <ItemGroup>
     <ClCompile Include="C:\Users\J\Documents\Project_Group\Group_Project_Bubble\src\main.cpp">
@@ -10,6 +10,9 @@
     <ClCompile Include="C:\Users\J\Documents\Project_Group\Group_Project_Bubble\src\UI.cpp">
       <Filter>Source Files</Filter>
     </ClCompile>
+    <ClCompile Include="..\src\Control.cpp">
+      <Filter>Source Files</Filter>
+    </ClCompile>
   </ItemGroup>
   <ItemGroup>
     <ClInclude Include="C:\Users\J\Documents\Project_Group\Group_Project_Bubble\src\constants.h">
@@ -19,6 +22,9 @@
       <Filter>Header Files</Filter>
     </ClInclude>
     <ClInclude Include="C:\Users\J\Documents\Project_Group\Group_Project_Bubble\src\UI.h">
+      <Filter>Header Files</Filter>
+    </ClInclude>
+    <ClInclude Include="..\src\Control.h">
       <Filter>Header Files</Filter>
     </ClInclude>
   </ItemGroup>
