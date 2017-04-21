@@ -69,9 +69,9 @@ int main(int argc, char* argv[])
 	cout << "Entering title screen\n";
 	show_title_screen();
 
-	TTF_Font *font = TTF_OpenFont("ArialBlack.ttf", 30);
+	TTF_Font *font = TTF_OpenFont("../assets/arial.ttf", 30);
 
-	//createNumberFont(ControlVec, C.font, font);
+	createNumberFont(ControlVec, C.font, font);
 	//SDL_SetWindowPosition(window, 0, 0);
 
 	if (running)
@@ -175,7 +175,7 @@ void render()
 {
 	SDL_RenderClear(renderer);
 
-	for (int i = 0; i < balloons.size(); i++) balloons[i].render();
+	for (int i = 0; i < balloons.size(); i++) balloons[i].render(ControlVec);
 	panel.render();
 
 	SDL_RenderPresent(renderer);
@@ -267,7 +267,7 @@ void createNumberFont(vector<Control>& newvector, SDL_Texture* texture, TTF_Font
 {
 	for (int i = 0; i < 30; i++)
 	{
-		//cout << player.numbers[i] << endl;
+		cout << C.numbers[i] << endl;
 		SDL_Surface *textSurface = TTF_RenderText_Solid(font, C.numbers[i], C.black);
 		texture = SDL_CreateTextureFromSurface(renderer, textSurface);
 		textSurface = nullptr;

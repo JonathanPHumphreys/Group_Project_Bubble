@@ -2,6 +2,7 @@
 
 #include "graphics.h"
 
+
 Balloon::Balloon() {}
 
 Balloon::Balloon(SDL_Renderer* game_renderer, char* file_path, float x, float y, float w, float h)
@@ -17,6 +18,8 @@ Balloon::Balloon(SDL_Renderer* game_renderer, char* file_path, float x, float y,
 	collider.y = position.y;
 	collider.w = dimensions.x;
 	collider.h = dimensions.y;
+
+	ballonValue = rand() % 30;
 }
 
 void Balloon::update()
@@ -34,13 +37,19 @@ void Balloon::update()
 	}
 }
 
-void Balloon::render() 
+void Balloon::render(vector <Control> cv) 
 {
-	SDL_Rect dst;
 	dst.x = position.x; 								// sets dst x position
 	dst.y = position.y; 								// sets dst y position
 	dst.w = dimensions.x; 								// sets dst width
 	dst.h = dimensions.y; 								// sets dst height
 
-	SDL_RenderCopyEx(renderer, texture, NULL, &dst, NULL, NULL, SDL_FLIP_NONE);
+	fontdst.x = position.x;
+	fontdst.y = position.y;
+	//positond fonts here too 
+
+
+	SDL_RenderCopy(renderer, texture, NULL, &dst);
+	SDL_RenderCopy(renderer, cv[ballonValue].font  , NULL, &fontdst);
+
 }

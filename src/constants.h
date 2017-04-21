@@ -18,7 +18,7 @@ using std::string;
 using std::cout;
 using std::endl;
 
-const int SCREEN_WIDTH = 700;
+const int SCREEN_WIDTH = 1200;
 const int SCREEN_HEIGHT = 700;
 const int BALLOON_WIDTH = 140;
 const int BALLOON_HEIGHT = 140;
