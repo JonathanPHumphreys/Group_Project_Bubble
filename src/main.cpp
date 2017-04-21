@@ -71,7 +71,7 @@ int main(int argc, char* argv[])
 
 	TTF_Font *font = TTF_OpenFont("ArialBlack.ttf", 30);
 
-	createNumberFont(ControlVec, C.font, font);
+	//createNumberFont(ControlVec, C.font, font);
 	//SDL_SetWindowPosition(window, 0, 0);
 
 	if (running)
