@@ -135,8 +135,20 @@ void process_input()
 				balloons.erase(iter);
 			}
 		}
-
 		break;
+	case SDL_MOUSEBUTTONDOWN:
+		if (event.button.button == SDL_BUTTON_LEFT)
+		{
+			for (int i = 0; i < balloons.size(); i++)
+			{
+				if (event.button.x > balloons[i].position.x && event.button.x < balloons[i].position.x + balloons[i].dimensions.x
+					&& event.button.y > balloons[i].position.y && event.button.y < balloons[i].position.y + balloons[i].dimensions.y)
+				{
+					vector<Balloon>::iterator iter = balloons.begin() + i;
+					balloons.erase(iter);
+				}
+			}
+		}
 	}
 }
 

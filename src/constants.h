@@ -21,7 +21,7 @@ using std::endl;
 const int SCREEN_WIDTH = 700;
 const int SCREEN_HEIGHT = 700;
 const int BALLOON_WIDTH = 140;
-const int BALLOON_HEIGHT = 190;
+const int BALLOON_HEIGHT = 140;
 
 struct plot {
 	float x;
