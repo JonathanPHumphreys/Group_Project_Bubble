@@ -16,6 +16,7 @@ void show_title_screen();
 bool is_colliding(SDL_Rect &a, SDL_Rect &b);
 double current_time();
 void createNumberFont(vector<Control>& newvector, SDL_Texture* texture, TTF_Font* font);
+SDL_Texture* createFont(TTF_Font * font, const char * whatTheFontIs, SDL_Texture * whereToStore);
 
 // global objects
 SDL_Window* window = NULL;
@@ -25,6 +26,7 @@ Panel panel;
 
 vector<Balloon> balloons;
 vector<Control> ControlVec;
+vector<Control> ScoreVec;
 
 // global variables
 bool running = true, fullscreen = false;
@@ -69,13 +71,18 @@ int main(int argc, char* argv[])
 	cout << "Entering title screen\n";
 	show_title_screen();
 
-	TTF_Font *font = TTF_OpenFont("../assets/arial.ttf", 30);
+	TTF_Font *font = TTF_OpenFont("../assets/arial.ttf", 100);
+	TTF_Font *scoreFont = TTF_OpenFont("../assets/arial.ttf", 30);
 
 	createNumberFont(ControlVec, C.font, font);
-	SDL_Texture* createFont(TTF_Font * font, const char * whatTheFontIs, SDL_Texture * whereToStore);
+	createNumberFont(ScoreVec, C.scoreTexture, scoreFont);
+
+	C.scoreTexture = createFont(scoreFont, "Score: ", C.scoreTexture);
+	SDL_QueryTexture(C.scoreTexture, NULL, NULL, &C.scoreRect.w, &C.scoreRect.h);
+
 	//SDL_SetWindowPosition(window, 0, 0);
 
-	if (running)
+	while (running)
 	{
 		generate();
 		cout << "Level generated\n";
@@ -178,7 +185,7 @@ void render()
 
 	for (int i = 0; i < balloons.size(); i++) balloons[i].render(ControlVec);
 	panel.render();
-
+	SDL_RenderCopy(renderer, C.scoreTexture, NULL, &C.scoreRect);
 	SDL_RenderPresent(renderer);
 }
 

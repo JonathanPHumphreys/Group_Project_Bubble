@@ -8,6 +8,8 @@ public:
 	Control(SDL_Texture* font_input);
 	~Control();
 	SDL_Texture* font;
+	SDL_Texture* scoreTexture;
+	SDL_Rect scoreRect = { 5,5, 30, 30 };
 	SDL_Color white = { 225,255,255,255 };
 	SDL_Color black = { 0,0,0,255 };
 	SDL_Color red = { 225,0,0,255 };
@@ -16,4 +18,5 @@ public:
 	char * numbers[30] = { "1","2","3","4","5","6","7","8","9","10",
 		"11","12","13","14","15","16","17","18","19","20",
 		"21","22","23","24","25","26","27","28","29","30"};
+	char * score[10] = { "0" , "1" , "2" , "3" , "4" , "5" , "6" , "7" , "8" , "9" };
 };
