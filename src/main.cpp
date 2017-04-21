@@ -72,6 +72,7 @@ int main(int argc, char* argv[])
 	TTF_Font *font = TTF_OpenFont("../assets/arial.ttf", 30);
 
 	createNumberFont(ControlVec, C.font, font);
+	SDL_Texture* createFont(TTF_Font * font, const char * whatTheFontIs, SDL_Texture * whereToStore);
 	//SDL_SetWindowPosition(window, 0, 0);
 
 	if (running)
@@ -274,4 +275,13 @@ void createNumberFont(vector<Control>& newvector, SDL_Texture* texture, TTF_Font
 		SDL_FreeSurface(textSurface);
 		newvector.emplace_back(texture);
 	}
+}
+
+SDL_Texture* createFont(TTF_Font * font, const char * whatTheFontIs, SDL_Texture * whereToStore)
+{
+	SDL_Surface *textSurface = TTF_RenderText_Solid(font, whatTheFontIs, C.black);
+	SDL_Texture* newt = SDL_CreateTextureFromSurface(renderer, textSurface);
+	textSurface = nullptr;
+	SDL_FreeSurface(textSurface);
+	return newt;
 }
