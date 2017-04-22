@@ -17,6 +17,7 @@ bool is_colliding(SDL_Rect &a, SDL_Rect &b);
 double current_time();
 void createNumberFont(vector<Control>& newvector, SDL_Texture* texture, TTF_Font* font);
 SDL_Texture* createFont(TTF_Font * font, const char * whatTheFontIs, SDL_Texture * whereToStore);
+void createNumberFont(vector<Control>& newvector, SDL_Texture* texture, TTF_Font* font, int numbers);
 
 // global objects
 SDL_Window* window = NULL;
@@ -75,7 +76,7 @@ int main(int argc, char* argv[])
 	TTF_Font *scoreFont = TTF_OpenFont("../assets/arial.ttf", 30);
 
 	createNumberFont(ControlVec, C.font, font);
-	createNumberFont(ScoreVec, C.scoreTexture, scoreFont);
+	createNumberFont(ScoreVec, C.numbersTexture, scoreFont, 10);
 
 	C.scoreTexture = createFont(scoreFont, "Score: ", C.scoreTexture);
 	SDL_QueryTexture(C.scoreTexture, NULL, NULL, &C.scoreRect.w, &C.scoreRect.h);
@@ -184,8 +185,14 @@ void render()
 	SDL_RenderClear(renderer);
 
 	for (int i = 0; i < balloons.size(); i++) balloons[i].render(ControlVec);
+
 	panel.render();
+
 	SDL_RenderCopy(renderer, C.scoreTexture, NULL, &C.scoreRect);
+	SDL_RenderCopy(renderer, ScoreVec[C.score0].font, NULL, &C.numberRect0);
+	SDL_RenderCopy(renderer, ScoreVec[C.score1].font, NULL, &C.numberRect1);
+
+
 	SDL_RenderPresent(renderer);
 }
 
@@ -277,6 +284,19 @@ void createNumberFont(vector<Control>& newvector, SDL_Texture* texture, TTF_Font
 	{
 		cout << C.numbers[i] << endl;
 		SDL_Surface *textSurface = TTF_RenderText_Solid(font, C.numbers[i], C.black);
+		texture = SDL_CreateTextureFromSurface(renderer, textSurface);
+		textSurface = nullptr;
+		SDL_FreeSurface(textSurface);
+		newvector.emplace_back(texture);
+	}
+}
+
+void createNumberFont(vector<Control>& newvector, SDL_Texture* texture, TTF_Font* font, int numbers)
+{
+	for (int i = 0; i < numbers; i++)
+	{
+		cout << C.score[i] << endl;
+		SDL_Surface *textSurface = TTF_RenderText_Solid(font, C.score[i], C.black);
 		texture = SDL_CreateTextureFromSurface(renderer, textSurface);
 		textSurface = nullptr;
 		SDL_FreeSurface(textSurface);
