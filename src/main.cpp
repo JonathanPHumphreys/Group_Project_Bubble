@@ -137,6 +137,9 @@ void process_input()
 		case SDLK_ESCAPE:
 			buttons[0] = true;
 			break;
+		case SDLK_f:
+			C.score1++;
+			break;
 		}
 		break;
 	case SDL_QUIT:
@@ -154,8 +157,8 @@ void process_input()
 				balloons.erase(iter);
 			}
 		}
+	break;
 
-		break;
 	}
 }
 
@@ -189,6 +192,17 @@ void render()
 	panel.render();
 
 	SDL_RenderCopy(renderer, C.scoreTexture, NULL, &C.scoreRect);
+
+	if (C.score1 > 9)
+	{
+		if (C.score0 > 9)
+		{
+			C.score0 = 0;
+		}
+		C.score1 = 0;
+		C.score0++;
+	}
+
 	SDL_RenderCopy(renderer, ScoreVec[C.score0].font, NULL, &C.numberRect0);
 	SDL_RenderCopy(renderer, ScoreVec[C.score1].font, NULL, &C.numberRect1);
 
