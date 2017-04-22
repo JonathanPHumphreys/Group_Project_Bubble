@@ -21,6 +21,8 @@ Balloon::Balloon(SDL_Renderer* game_renderer, char* file_path, float x, float y,
 	collider.h = dimensions.y;
 
 	ballonValue = rand() % 30;
+
+
 }
 
 void Balloon::update()
