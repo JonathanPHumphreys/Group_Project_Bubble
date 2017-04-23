@@ -11,6 +11,7 @@ private:
 	SDL_Renderer* renderer;
 	SDL_Texture* texture;
 	SDL_Rect dst;
+	SDL_Rect fontdst;
 public:
 	plot dimensions;
 	plot position;

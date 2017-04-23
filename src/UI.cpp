@@ -33,5 +33,11 @@ void Panel::render(vector <Control> cv, int num)
 	dst.w = dimensions.x; 								// sets dst width
 	dst.h = dimensions.y; 								// sets dst height
 
-	SDL_RenderCopyEx(renderer, texture, NULL, &dst, NULL, NULL, SDL_FLIP_NONE);
+	fontdst.x = position.x + 5;
+	fontdst.y = position.y + 15;
+	fontdst.w = (dimensions.x / 1.25);
+	fontdst.h = (dimensions.y / 1.25);
+
+	SDL_RenderCopy(renderer, texture, NULL, &dst);
+	SDL_RenderCopy(renderer, cv[num].font, NULL, &fontdst);
 }
