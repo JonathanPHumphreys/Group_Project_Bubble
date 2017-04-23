@@ -35,6 +35,7 @@ double delta_time, old_time;
 const double FPS = 60.0;
 int timer = 60;
 int randomPanelNum = rand() % 29;
+float faster = 0.0001f;
 
 // key map
 std::array<bool, 2> buttons;
@@ -103,6 +104,8 @@ int main(int argc, char* argv[])
 			}
 			else
 			{
+				//faster += 0.001f; // makes it faster
+				//cout << faster << endl;
 				SDL_Delay(1);
 			}
 		}
@@ -178,7 +181,7 @@ void update()
 	if (timer == 0)
 	{
 		balloons.emplace_back(Balloon(renderer, "../assets/ball.png", rand() % (SCREEN_WIDTH - BALLOON_WIDTH), SCREEN_HEIGHT, BALLOON_WIDTH, BALLOON_HEIGHT));
-		balloons.back().velocity.y = -1.3;
+		balloons.back().velocity.y = (-1.3 - faster);
 
 		timer = 120;
 	}
