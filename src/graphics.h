@@ -24,5 +24,5 @@ public:
 	Balloon();
 	Balloon(SDL_Renderer*, char*, float, float, float, float);
 	void update();
-	void render(vector <Control> cv) ;
+	void render(vector <Control> cv);
 };

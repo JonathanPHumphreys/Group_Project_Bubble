@@ -16,7 +16,18 @@ Panel::Panel(SDL_Renderer* game_renderer, char* file_path, float x, float y, flo
 
 void Panel::render()
 {
-	SDL_Rect dst;
+	
+	dst.x = position.x; 								// sets dst x position
+	dst.y = position.y; 								// sets dst y position
+	dst.w = dimensions.x; 								// sets dst width
+	dst.h = dimensions.y; 								// sets dst height
+
+	SDL_RenderCopyEx(renderer, texture, NULL, &dst, NULL, NULL, SDL_FLIP_NONE);
+}
+
+void Panel::render(vector <Control> cv, int num)
+{
+
 	dst.x = position.x; 								// sets dst x position
 	dst.y = position.y; 								// sets dst y position
 	dst.w = dimensions.x; 								// sets dst width

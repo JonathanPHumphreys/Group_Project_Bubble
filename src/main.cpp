@@ -189,6 +189,7 @@ void render()
 
 	for (int i = 0; i < balloons.size(); i++) balloons[i].render(ControlVec);
 
+	//panel.render(ScoreVec, 14);
 	panel.render();
 
 	SDL_RenderCopy(renderer, C.scoreTexture, NULL, &C.scoreRect);
