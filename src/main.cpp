@@ -34,6 +34,7 @@ bool running = true, fullscreen = false;
 double delta_time, old_time;
 const double FPS = 60.0;
 int timer = 60;
+int randomPanelNum = rand() % 29;
 
 // key map
 std::array<bool, 2> buttons;
@@ -140,6 +141,9 @@ void process_input()
 		case SDLK_f:
 			C.score1++;
 			break;
+		case SDLK_r:
+			randomPanelNum = rand() % 29;
+			break;
 		}
 		break;
 	case SDL_QUIT:
@@ -190,7 +194,7 @@ void render()
 	for (int i = 0; i < balloons.size(); i++) balloons[i].render(ControlVec);
 
 	//panel.render(ScoreVec, 14);
-	panel.render(ControlVec, 14);
+	panel.render(ControlVec, randomPanelNum);
 
 	SDL_RenderCopy(renderer, C.scoreTexture, NULL, &C.scoreRect);
 
