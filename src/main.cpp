@@ -192,7 +192,15 @@ void update()
 	}
 	else timer -= 1;
 
-	for (int i = 0; i < balloons.size(); i++) balloons[i].update();
+		for (int i = 0; i < balloons.size(); i++)
+		{
+			balloons[i].update();
+			
+			if (balloons[i].dst.y < (0 + BALLOON_HEIGHT))
+			{
+				//game over
+			}
+		}
 }
 
 void render()
@@ -297,8 +305,6 @@ bool is_colliding(SDL_Rect &a, SDL_Rect &b) {
 
 	return collision;
 }
-
-
 
 double current_time()
 {
