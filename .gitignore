@@ -28,3 +28,4 @@ CMakeCache.txt
 *.depend
 *.list
 *.check_cache
+*.suo
