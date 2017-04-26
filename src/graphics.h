@@ -22,7 +22,7 @@ public:
 
 	// functions
 	Balloon();
-	Balloon(SDL_Renderer*, char*, float, float, float, float);
+	Balloon(SDL_Renderer*, char*, int, float, float, float, float);
 	void update();
 	void render(vector <Control> cv);
 };
