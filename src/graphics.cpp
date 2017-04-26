@@ -5,7 +5,7 @@
 
 Balloon::Balloon() {}
 
-Balloon::Balloon(SDL_Renderer* game_renderer, char* file_path, float x, float y, float w, float h)
+Balloon::Balloon(SDL_Renderer* game_renderer, char* file_path, int panelNum, float x, float y, float w, float h)
 {
 	srand(time(NULL));
 	renderer = game_renderer;
@@ -20,9 +20,8 @@ Balloon::Balloon(SDL_Renderer* game_renderer, char* file_path, float x, float y,
 	collider.w = dimensions.x;
 	collider.h = dimensions.y;
 
-	ballonValue = rand() % 30;
-
-
+	if (rand() % 6 == 0) ballonValue = panelNum;
+	else ballonValue = rand() % 30;
 }
 
 void Balloon::update()
