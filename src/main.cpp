@@ -34,9 +34,10 @@ bool running = true, fullscreen = false;
 double delta_time, old_time;
 const double FPS = 60.0;
 int timer = 60;
-int randomPanelNum = rand() % 29;
 float faster = 0.0001f;
 
+int randomPanelNum = rand() % 29;
+int panelNum = 0;
 // key map
 std::array<bool, 2> buttons;
 
@@ -146,6 +147,10 @@ void process_input()
 			break;
 		case SDLK_r:
 			randomPanelNum = rand() % 29;
+			/// THIS IS THE NUMBER TO PUT IN THE ARRAY NOT THE ACTUAL NUMBER 
+			panelNum = randomPanelNum;//sets the panel num as the random panel num so we can check the values  - if they match.
+			/// ------------------------------------------------------------------------
+			cout << panelNum << endl;
 			break;
 		}
 		break;
@@ -196,7 +201,6 @@ void render()
 
 	for (int i = 0; i < balloons.size(); i++) balloons[i].render(ControlVec);
 
-	//panel.render(ScoreVec, 14);
 	panel.render(ControlVec, randomPanelNum);
 
 	SDL_RenderCopy(renderer, C.scoreTexture, NULL, &C.scoreRect);
@@ -213,7 +217,6 @@ void render()
 
 	SDL_RenderCopy(renderer, ScoreVec[C.score0].font, NULL, &C.numberRect0);
 	SDL_RenderCopy(renderer, ScoreVec[C.score1].font, NULL, &C.numberRect1);
-
 
 	SDL_RenderPresent(renderer);
 }
@@ -293,6 +296,11 @@ bool is_colliding(SDL_Rect &a, SDL_Rect &b) {
 	}
 
 	return collision;
+}
+
+bool is_colliding(SDL_Rect &a, int yValue)//if above yvalue - size of balloon , then handler
+{
+	
 }
 
 double current_time()
