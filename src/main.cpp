@@ -201,6 +201,7 @@ void update()
 				if (balloons[i].ballonValue == panelNum)
 				{
 					//game over
+					running = false;
 				}
 				else
 				{

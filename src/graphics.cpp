@@ -56,5 +56,6 @@ void Balloon::render(vector <Control> cv)
 
 	SDL_RenderCopy(renderer, texture, NULL, &dst);
 	SDL_RenderCopy(renderer, cv[ballonValue].font  , NULL, &fontdst);
+	//cout << ballonValue << endl;
 
 }
