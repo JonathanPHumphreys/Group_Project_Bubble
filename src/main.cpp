@@ -34,16 +34,21 @@ bool running = true, fullscreen = false;
 double delta_time, old_time;
 const double FPS = 60.0;
 int timer = 60;
-float faster = 0.0001f;
-
-int randomPanelNum = rand() % 29;
+int max_timer = 120;
+float faster = -1.3f;
+int randomPanelNum;
 int panelNum = 0;
+
 // key map
 std::array<bool, 2> buttons;
 
 int main(int argc, char* argv[])
 {
-	srand(NULL);
+	srand(time(NULL));
+	randomPanelNum = rand() % 29;
+	/// THIS IS THE NUMBER TO PUT IN THE ARRAY NOT THE ACTUAL NUMBER 
+	panelNum = randomPanelNum;
+
 	if (SDL_Init(SDL_INIT_EVERYTHING) != 0)
 	{
 		SDL_LogCritical(SDL_LOG_CATEGORY_APPLICATION, "SDL_Init Error: %s\n", SDL_GetError());
@@ -105,8 +110,6 @@ int main(int argc, char* argv[])
 			}
 			else
 			{
-				faster += 0.001f; // makes it faster
-				//cout << faster << endl;
 				SDL_Delay(1);
 			}
 		}
@@ -154,9 +157,45 @@ void process_input()
 			break;
 		}
 		break;
+
 	case SDL_QUIT:
 		buttons[0] = true;
 		break;
+
+	case SDL_MOUSEBUTTONDOWN:
+		if (event.button.button == SDL_BUTTON_LEFT)
+		{
+			// mouse input
+			for (int i = 0; i < balloons.size(); i++)
+			{
+				if (event.button.x > balloons[i].position.x && event.button.x < balloons[i].position.x + balloons[i].dimensions.x
+					&& event.button.y > balloons[i].position.y && event.button.y < balloons[i].position.y + balloons[i].dimensions.y)
+				{
+					if (balloons[i].ballonValue == panelNum)
+					{
+						// add score
+						C.score1++;
+						randomPanelNum = rand() % 29;
+						/// THIS IS THE NUMBER TO PUT IN THE ARRAY NOT THE ACTUAL NUMBER 
+						panelNum = randomPanelNum;
+					}
+					else
+					{
+						// remove score
+						if (C.score1 == 0 && C.score0 != 0) {
+							C.score0--;
+							C.score1 = 9;
+						}
+						else if (C.score1 != 0) C.score1--;
+					}
+
+					vector<Balloon>::iterator iter = balloons.begin() + i;
+					balloons.erase(iter);
+				}
+			}
+		}
+		break;
+
 	case SDL_FINGERDOWN:
 		int touchPosition_x = event.tfinger.x * SCREEN_WIDTH;
 		int touchPosition_y = event.tfinger.y * SCREEN_HEIGHT;
@@ -165,12 +204,29 @@ void process_input()
 			if (touchPosition_x > balloons[i].position.x && touchPosition_x < balloons[i].position.x + balloons[i].dimensions.x
 				&& touchPosition_y > balloons[i].position.y && touchPosition_y < balloons[i].position.y + balloons[i].dimensions.y)
 			{
+				if (balloons[i].ballonValue == panelNum)
+				{
+					// add score
+					C.score1++;
+					randomPanelNum = rand() % 29;
+					/// THIS IS THE NUMBER TO PUT IN THE ARRAY NOT THE ACTUAL NUMBER 
+					panelNum = randomPanelNum;
+				}
+				else
+				{
+					// remove score
+					if (C.score1 == 0 && C.score0 != 0) {
+						C.score0--;
+						C.score1 = 9;
+					}
+					else if (C.score1 != 0) C.score1--;
+				}
+
 				vector<Balloon>::iterator iter = balloons.begin() + i;
 				balloons.erase(iter);
 			}
 		}
 	break;
-
 	}
 }
 
@@ -183,30 +239,45 @@ void update()
 		buttons[0] = false;
 	}
 
+	if (faster > -9.0f) faster -= 0.001f; // makes it faster
+	//cout << faster << endl;
+
 	if (timer == 0)
 	{
-		balloons.emplace_back(Balloon(renderer, "../assets/ball.png", rand() % (SCREEN_WIDTH - BALLOON_WIDTH), SCREEN_HEIGHT, BALLOON_WIDTH, BALLOON_HEIGHT));
-		balloons.back().velocity.y = (-1.3 - faster);
+		balloons.emplace_back(Balloon(renderer, "../assets/ball.png", panelNum, rand() % (SCREEN_WIDTH - BALLOON_WIDTH), SCREEN_HEIGHT, BALLOON_WIDTH, BALLOON_HEIGHT));
+		balloons.back().velocity.y = (faster);
 
-		timer = 120;
+		timer = max_timer;
+		//cout << max_timer << endl;
+		if (max_timer > 50) max_timer--;
+		//cout << faster << endl;
 	}
 	else timer -= 1;
 
 		for (int i = 0; i < balloons.size(); i++)
 		{
 			balloons[i].update();
-			
-			if (balloons[i].dst.y < (0 + BALLOON_HEIGHT))
+			//cout << "balloon dst.y: " << balloons[i].dst.y << endl;
+
+			if (balloons[i].position.y < (0))
 			{
+
+				//cout << "hit the top" << endl;
+				//cout << "dst.y: " << balloons[i].position.y << endl;
 				if (balloons[i].ballonValue == panelNum)
 				{
 					//game over
+					cout << "this should end the game" << endl;
 					running = false;
 				}
 				else
 				{
 					//nothing
 				}
+
+				vector<Balloon>::iterator iter = balloons.begin() + i;
+				balloons.erase(iter);
+				//cout << "delete here" << endl;
 			}
 		}
 }
