@@ -105,7 +105,7 @@ int main(int argc, char* argv[])
 			}
 			else
 			{
-				//faster += 0.001f; // makes it faster
+				faster += 0.001f; // makes it faster
 				//cout << faster << endl;
 				SDL_Delay(1);
 			}
