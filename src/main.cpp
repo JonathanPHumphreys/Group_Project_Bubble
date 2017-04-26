@@ -198,7 +198,14 @@ void update()
 			
 			if (balloons[i].dst.y < (0 + BALLOON_HEIGHT))
 			{
-				//game over
+				if (balloons[i].ballonValue == panelNum)
+				{
+					//game over
+				}
+				else
+				{
+					//nothing
+				}
 			}
 		}
 }
