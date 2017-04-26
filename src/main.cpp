@@ -298,10 +298,7 @@ bool is_colliding(SDL_Rect &a, SDL_Rect &b) {
 	return collision;
 }
 
-bool is_colliding(SDL_Rect &a, int yValue)//if above yvalue - size of balloon , then handler
-{
-	
-}
+
 
 double current_time()
 {
